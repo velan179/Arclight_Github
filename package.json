@@ -1,0 +1,25 @@
+{
+  "name": "resolveflow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ResolveFlow - Autonomous Customer Resolution Agent",
+  "scripts": {
+    "dev": "npm run dev:server",
+    "dev:all": "npx concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "start:server": "npm --prefix server start",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "build:client": "npm --prefix client run build",
+    "test:server": "npm --prefix server test"
+  },
+  "keywords": [
+    "autonomous-agent",
+    "customer-resolution",
+    "llm-orchestrator",
+    "state-machine",
+    "hackathon"
+  ],
+  "author": "ResolveFlow Team",
+  "license": "ISC"
+}
