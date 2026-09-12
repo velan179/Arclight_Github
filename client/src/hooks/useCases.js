@@ -1,33 +1,19 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../services/api';
-import { mockCases } from '../services/mockData';
+import { casesApi } from '../services/casesApi';
+import { agentApi } from '../services/agentApi';
 
-export const useCases = () => {
+export const useCases = (filters = {}) => {
   return useQuery({
-    queryKey: ['cases'],
-    queryFn: async () => {
-      try {
-        const res = await api.get('/cases');
-        return res.data;
-      } catch (err) {
-        console.warn('Backend unavailable, utilizing contract mock data:', err);
-        return mockCases;
-      }
-    }
+    queryKey: ['cases', filters],
+    queryFn: () => casesApi.getCases(filters),
+    keepPreviousData: true
   });
 };
 
 export const useCaseDetails = (id) => {
   return useQuery({
     queryKey: ['cases', id],
-    queryFn: async () => {
-      try {
-        const res = await api.get(`/cases/${id}`);
-        return res.data;
-      } catch (err) {
-        return mockCases.find((c) => c.id === id) || mockCases[0];
-      }
-    },
+    queryFn: () => casesApi.getCaseById(id),
     enabled: !!id
   });
 };
@@ -35,9 +21,28 @@ export const useCaseDetails = (id) => {
 export const useCreateCase = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (newCase) => api.post('/cases', newCase),
+    mutationFn: (payload) => casesApi.createCase(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cases'] });
     }
+  });
+};
+
+export const useRunAgent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ caseId, simulateFailure }) => agentApi.runAgent(caseId, simulateFailure),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cases'] });
+      queryClient.invalidateQueries({ queryKey: ['agentEvents'] });
+    }
+  });
+};
+
+export const useAgentEvents = (runId = 'run_9001') => {
+  return useQuery({
+    queryKey: ['agentEvents', runId],
+    queryFn: () => agentApi.getAgentEvents(runId),
+    refetchInterval: 10000
   });
 };
