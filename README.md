@@ -626,63 +626,7 @@ Code execution must occur inside an appropriately isolated sandbox.
 
 ---
 
-# Project Structure
 
-socraticx/
-│
-├── client/
-│   ├── public/
-│   └── src/
-│       ├── components/
-│       │   ├── assignment/
-│       │   ├── tutor/
-│       │   ├── agent/
-│       │   ├── verification/
-│       │   ├── dashboard/
-│       │   └── common/
-│       ├── pages/
-│       │   ├── Login.jsx
-│       │   ├── Register.jsx
-│       │   ├── Dashboard.jsx
-│       │   ├── Assignment.jsx
-│       │   ├── Tutor.jsx
-│       │   └── DemoCenter.jsx
-│       ├── hooks/
-│       ├── services/
-│       ├── api/
-│       ├── utils/
-│       ├── types/
-│       ├── App.jsx
-│       └── main.jsx
-│
-├── server/
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   │   ├── agent/
-│   │   ├── gemini/
-│   │   ├── tools/
-│   │   ├── verification/
-│   │   └── tutoring/
-│   ├── utils/
-│   ├── app.js
-│   └── server.js
-│
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-│
-├── .env.example
-├── .gitignore
-├── LICENSE
-├── package.json
-└── README.md
-
----
 
 # Agent State Machine
 
