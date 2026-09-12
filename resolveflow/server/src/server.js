@@ -4,12 +4,18 @@
  */
 
 import app from './app.js';
-import { connectDB } from './config/db.js';
+import { connectDB, getConnectionState } from './config/db.js';
 import config from './config/env.js';
+import seedDatabase from './models/seed.js';
 
 async function start() {
   // Attempt DB connection — non-fatal; /api/health works without it
   await connectDB();
+
+  const { isConnected } = getConnectionState();
+  if (isConnected) {
+    await seedDatabase();
+  }
 
   app.listen(config.port, () => {
     console.log('');
